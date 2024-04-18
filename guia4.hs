@@ -36,7 +36,7 @@ esDivisible x y | x < y = False
 sumaImpares :: Integer -> Integer
 sumaImpares 0 = 0
 sumaImpares 1 = 1
-sumaImpares n | n > 1 = (2*n-1) + sumaImpares (n-1)
+sumaImpares n | n > 1 = (2 * n - 1) + sumaImpares (n - 1)
 
 --5
 
@@ -53,9 +53,30 @@ sumaDigitos n = mod n 10 + sumaDigitos (div n 10)
 
 --7
 
--- todosDigitosIguales :: Integer -> Bool
--- todosDigitosIguales n | mod n 10 == n = True
-                      
+todosDigitosIguales :: Integer -> Bool
+todosDigitosIguales n | n < 10 = True
+                      | otherwise = (mod n 10) == (mod (div n 10) 10) && todosDigitosIguales(div n 10)
+
+--8
+
+cantDigitos :: Integer -> Integer 
+cantDigitos x | x < 10 = 1
+              | otherwise = 1 + cantDigitos (div x 10)
+
+-- n = número natural con x cantidad de digitos
+-- i = número natural menor o igual a la cantidad de digitos de n
+
+iesimoDigito :: Integer -> Integer -> Integer -- devuelve el i-esimo digito de n (digito de n en la posición 'i')
+iesimoDigito n i | cantDigitos n == 1 = n
+                 | i < n && i == cantDigitos n = mod n 10
+                 | otherwise = iesimoDigito (div n 10) i
+
+-- iesimoDigito :: Int -> Int -> Int
+-- iesimoDigito n i = mod (div n (10 ^ ((cantDigitos n) - i))) 10
+
+--9
+
+
 
 --13
 
