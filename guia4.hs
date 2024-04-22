@@ -74,9 +74,37 @@ iesimoDigito n i | cantDigitos n == 1 = n
 -- iesimoDigito :: Int -> Int -> Int
 -- iesimoDigito n i = mod (div n (10 ^ ((cantDigitos n) - i))) 10
 
---9
+--10
 
+f1 :: Int -> Int
+f1 x | x == 0 = 1
+     | x > 0 = 2 ^ x + f1 (x - 1)
 
+f2 :: Int -> Int -> Int
+f2 x y | x == 1 = y
+       | otherwise = y ^ x + f2 (x - 1) y
+
+-- ??
+f3 :: Int -> Int -> Int
+f3 x y = f2 (2 * x) y
+
+-- f4 :: Int -> Int -> Int
+-- f4 
+
+--11
+
+eAprox :: Int -> Float
+eAprox n | n == 0 = 1
+         | otherwise = 1 / fromIntegral (factorial n) + eAprox (n - 1)
+
+e :: Float 
+e = eAprox 10
+
+--12
+
+-- raizDe2Aprox :: Integer -> Float
+-- raizDe2Aprox n | n == 1 = 1
+--                | n > 1 = 2 + 1 / (raizDe2Aprox (n - 1))
 
 --13
 
@@ -88,3 +116,5 @@ sumatoriaDesdeM i m = i^m + sumatoriaDesdeM i (m-1)
 sumatoriaDoble :: Int -> Int -> Int
 sumatoriaDoble 0 _ = 0
 sumatoriaDoble n m = sumatoriaDesdeM n m + sumatoriaDoble (n-1) m
+
+--14
