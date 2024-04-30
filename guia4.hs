@@ -128,3 +128,28 @@ sumaPotencias q n 1 = q^(n+1)
 sumaPotencias q n m = sumaPotenciasN q n m + sumaPotencias q n (m-1)
 
 -- 15
+-- corroborar xdxd
+sumaRacionales :: Integer -> Integer -> Float
+sumaRacionales 0 _ = 0
+sumaRacionales n m = sumaRacionalesAux n m + sumaRacionales (n-1) m
+
+sumaRacionalesAux :: Integer -> Integer -> Float
+sumaRacionalesAux _ 0 = 0
+sumaRacionalesAux n m = fromIntegral n / fromIntegral m + sumaRacionalesAux n (m-1)
+
+-- p primo <-> no existe k tq 1 < k < p && mod p k = 0
+-- 16.a
+
+menorDivisor :: Integer -> Integer
+menorDivisor 1 = 1
+menorDivisor n = menorDivisorDesde n 2
+
+menorDivisorDesde :: Integer -> Integer -> Integer
+menorDivisorDesde n m | mod n m == 0 = m
+                      | otherwise = menorDivisorDesde n (m+1)
+
+-- 16.b
+
+esPrimo :: Integer -> Bool
+esPrimo 1 = True
+esPrimo n = menorDivisorDesde n 2 == n
