@@ -201,3 +201,37 @@ primos n | esPrimo n = [n]
 descomponerEnPrimos :: [Integer] -> [[Integer]]
 descomponerEnPrimos [x] = primos x : []
 descomponerEnPrimos (x:xs) = primos x : descomponerEnPrimos xs
+
+-- 4.a
+
+sacarBlancosRepetidos :: [Char] -> [Char]
+sacarBlancosRepetidos [] = []
+sacarBlancosRepetidos [x] = [x]
+sacarBlancosRepetidos (x:y:xs) | x == ' ' && x == y = sacarBlancosRepetidos (y:xs)
+                               | otherwise = x : sacarBlancosRepetidos (y:xs)
+
+-- 4.b
+
+contarPalabrasSinEspacios :: [Char] -> Integer
+contarPalabrasSinEspacios xs = contarPalabras (sacarBlancosRepetidos (sacarPrimerBlanco xs))
+
+contarPalabras :: [Char] -> Integer
+contarPalabras [] = 0
+contarPalabras [x] = 1
+contarPalabras (x:xs) | x == ' ' = 1 + contarPalabras xs
+                      | otherwise = contarPalabras xs
+
+sacarPrimerBlanco :: [Char] -> [Char]
+sacarPrimerBlanco (x:xs) | x == ' ' = xs
+                         | otherwise = (x:xs)
+
+-- 4.c
+
+-- palabras :: [Char] -> [[Char]]
+-- palabras [] = [[]]
+-- palabras [x] = [[x]]
+-- palabras (x:xs) | 
+
+palabra :: [Char] -> [[Char]]
+palabra [x] = [[x]]
+palabra xs = sacarBlancosRepetidos (sacarPrimerBlanco xs) : []
