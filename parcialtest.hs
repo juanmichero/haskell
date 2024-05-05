@@ -57,3 +57,4 @@ proximoPresidente ((p,v):ys) (x:xs) | maximo (x:xs) == x = p
 -- personasConRepetidos :: [(String, String)] -> [String]
 -- personasConRepetidos [(p1,p2)] == (p1:p2:[]) = [p1,p2]
 -- personasConRepetidos (p1,p2):xs = p1:p2:(personasConMasRep xs)
+

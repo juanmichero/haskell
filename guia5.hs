@@ -226,12 +226,19 @@ sacarPrimerBlanco (x:xs) | x == ' ' = xs
                          | otherwise = (x:xs)
 
 -- 4.c
+-- ???????????
+palabras :: [Char] -> [[Char]]
+palabras x = palabrasAux x x
 
--- palabras :: [Char] -> [[Char]]
--- palabras [] = [[]]
--- palabras [x] = [[x]]
--- palabras (x:xs) | 
+palabra :: [Char] -> [Char]
+palabra [] = []
+palabra (x:xs) | x == ' '  = []
+               | otherwise = x : palabra xs
 
-palabra :: [Char] -> [[Char]]
-palabra [x] = [[x]]
-palabra xs = sacarBlancosRepetidos (sacarPrimerBlanco xs) : []
+palabrasAux :: [Char] -> [Char] -> [[Char]]
+palabrasAux [] l = [palabra l]
+palabrasAux (x:xs) l | x == ' ' = palabra l : palabrasAux xs xs 
+                     | otherwise = palabrasAux xs l
+
+-- ['h', 'o', 'l', 'a', ' ', 'l', 'o', 'l'] = ["hola", "lol"]
+

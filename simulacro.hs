@@ -93,15 +93,64 @@
 
 --------------------------------
 
+-- 1
 
--- (x,y) (a,b) x=a && y=b || x=b && y=a
+relacionesValidas :: [(String, String)] -> Bool
+relacionesValidas [] = True
+relacionesValidas (x:xs) = not (tuplasIguales x) && not (tuplasRepetidas x xs) && relacionesValidas xs
 
--- relacionesValidas :: [(Int, Int)] -> Bool
--- relacionesValidas 
+tuplasIguales :: (String,String) -> Bool
+tuplasIguales (a,b) = a == b
 
-tuplasRepetidas :: [(Int, Int)] -> Bool
-tuplasRepetidas [] = False
-tuplasRepetidas [a, b] = a == b || fst a == snd b && snd a == fst b 
+tuplasRepetidas :: (String, String) -> [(String, String)] -> Bool
+tuplasRepetidas _ [] = False
+tuplasRepetidas (a,b) ((x1,x2):xs) = (a == x1 && b == x2) || (a == x2 && b == x1) || tuplasRepetidas (a,b) xs
 
-componentesIguales :: (Int, Int) -> Bool
-componentesIguales (x,y) = x == y
+-- 2 [("carlos","juan"),("sancho","panza"),("john","sancho")] => ["carlos","juan","sancho","panza","john"]
+
+personas :: [(String, String)] -> [String]
+personas [] = []
+personas (x:xs) = eliminarRepetidos (fst x : snd x : personas xs)
+
+-- aux
+
+pertenece :: (Eq t) => t -> [t] -> Bool
+pertenece _ [] = False
+pertenece x (y:ys) | x == y = True
+                   | otherwise = pertenece x ys
+
+quitarTodos :: (Eq t) => t -> [t] -> [t]
+quitarTodos _ [] = []
+quitarTodos x (y:ys) | x == y = quitarTodos x ys
+                     | otherwise = y : quitarTodos x ys
+
+eliminarRepetidos :: (Eq t) => [t] -> [t]
+eliminarRepetidos [] = []
+eliminarRepetidos (x:xs) | pertenece x xs = x : eliminarRepetidos (quitarTodos x xs)
+                         | otherwise = x : eliminarRepetidos xs
+
+-- 3 fst x == persona || snd x == persona = (x,persona) => [x,persona]
+
+amigosDe :: String -> [(String, String)] -> [String]
+amigosDe _ [] = []
+amigosDe x (y:ys) | x == (fst y) = (snd y) : amigosDe x ys
+                  | x == (snd y) = (fst y) : amigosDe x ys
+                  | otherwise = amigosDe x ys
+
+-- 4
+
+personaConMasAmigos :: [(String, String)] -> String
+personaConMasAmigos [x] = ""
+personaConMasAmigos (x:y:xs) | contarPersona (fst x) (x:y:xs) >= contarPersona (fst y) (x:y:xs) = fst x
+                             | contarPersona (snd x) (x:y:xs) >= contarPersona (snd y) (x:y:xs) = snd x
+                             | otherwise = personaConMasAmigos xs
+
+contarPersona :: String -> [(String, String)] -> Int
+contarPersona _ [] = 0
+contarPersona x (y:ys) | x == (fst y) || x == (snd y) = 1 + contarPersona x ys
+                       | otherwise = contarPersona x ys
+
+maximo :: [Int] -> Int
+maximo (x:[]) = x
+maximo (x:y:xs) | x >= y = maximo (x:xs) 
+                  | otherwise = maximo (y:xs)
