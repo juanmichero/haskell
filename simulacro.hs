@@ -142,15 +142,10 @@ amigosDe x (y:ys) | x == (fst y) = (snd y) : amigosDe x ys
 personaConMasAmigos :: [(String, String)] -> String
 personaConMasAmigos [x] = ""
 personaConMasAmigos (x:y:xs) | contarPersona (fst x) (x:y:xs) >= contarPersona (fst y) (x:y:xs) = fst x
-                             | contarPersona (snd x) (x:y:xs) >= contarPersona (snd y) (x:y:xs) = snd x
+                             | contarPersona (snd x) (x:y:xs) > contarPersona (snd y) (x:y:xs) = snd x
                              | otherwise = personaConMasAmigos xs
 
 contarPersona :: String -> [(String, String)] -> Int
 contarPersona _ [] = 0
 contarPersona x (y:ys) | x == (fst y) || x == (snd y) = 1 + contarPersona x ys
                        | otherwise = contarPersona x ys
-
-maximo :: [Int] -> Int
-maximo (x:[]) = x
-maximo (x:y:xs) | x >= y = maximo (x:xs) 
-                  | otherwise = maximo (y:xs)
